@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const user = require("./routes/user");
 const InitiateMongoServer = require("./config/db");
+const cookieParser = require("cookie-parser");
 
 // mongo 서버 initiate
 InitiateMongoServer();
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 4000;
 
 // 미들웨어
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
     res.json({ message: "API Working" });

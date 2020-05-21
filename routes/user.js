@@ -18,11 +18,11 @@ const User = require("../model/User");
 router.post (
     "/signup",
     [
-        check("username", "허용가능한 아이디를 입력해주세요")
+        check("username", "아이디를 입력해주세요")
         .not()
         .isEmpty(),
-        check("email", "가능한 이메일을 입력해주세요").isEmail(),
-        check("password", "6자리 이상의 비밀번호를 입력해주세요").isLength({
+        check("email", "이메일을 입력해주세요").isEmail(),
+        check("password", "비밀번호를 입력해주세요").isLength({
             min: 6
         })
     ],
@@ -45,7 +45,7 @@ router.post (
             });
             if (user) {
                 return res.status(400).json({
-                    msg: "이미 존재하는 아이디 입니다"
+                    msg: "이미 존재하는 이메일 입니다"
                 });
             }
 
@@ -161,6 +161,12 @@ router.get("/me", auth, async (req, res) => {
         res.send({ message: "Error in Fetching user" });
     }
 });
+
+router.post('/logout', (req, res) => {
+    req.session.destroy(err => { if(err) throw err; });
+    return res.json({ success: true });
+});
+
 
 module.exports = router;
 
